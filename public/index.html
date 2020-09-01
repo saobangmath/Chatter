@@ -54,7 +54,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
         <script src = "/socket.io/socket.io.js"></script>
         <script>
-            const socket = io();
+            const socket = io("/tech");
             // send btn;
             $('#send').click(() => {
                 socket.emit("message", $("#m").val());
@@ -64,6 +64,10 @@
             // clear btn;
             $('#clear').click(() => {
                 $('#m').val("");
+            });
+            
+            socket.on("connect", () => {
+                socket.emit("message", "user connected")
             });
             // update the messages section
             socket.on("message", (msg) => {
