@@ -35,17 +35,17 @@
             </div>
             <div class="row">
                <div class = "col-lg-6">
-                   <form action = "">
+                    <form>
                         <div class = "input-group">
                             <input id = "m" autocomplete="off" 
                                 type = "text" class = "form-control"
                                 placeholder="Message..." aria-label="Message...">
                             <span>
-                                <button id = "send" class = "btn btn-secondary" type = "submit">Send</button>
-                                <button id = "clear" class = "btn btn-secondary">Clear</button>
+                                <button id = "send" class = "btn btn-secondary" type = "button">Send</button>
+                                <button id = "clear" class = "btn btn-secondary" type = "button">Clear</button>
                             </span>
                         </div>
-                   </form>
+                    </form>
                </div>
             </div>
         </div>
@@ -64,13 +64,17 @@
             // send btn;
             $('#send').click(() => {
                 let msg = $("#m").val();
+                if (msg === ""){
+                    alert("Please enter some messages!");
+                    return false;
+                }
                 socket.emit("message", {msg, room});
                 $('#m').val("");
-                return false;
+                return true;
             });
             // clear btn;
             $('#clear').click(() => {
-                $('#m').val("");
+                $('#messages').text("");
             });
             // update the messages section
             socket.on("message", (msg) => {

@@ -42,7 +42,7 @@
                                 placeholder="Message..." aria-label="Message...">
                             <span>
                                 <button id = "send" class = "btn btn-secondary" type = "submit">Send</button>
-                                <button id = "clear" class = "btn btn-secondary">Clear</button>
+                                <button id = "clear" class = "btn btn-secondary" type = "submit">Clear</button>
                             </span>
                         </div>
                    </form>
@@ -64,13 +64,17 @@
             // send btn;
             $('#send').click(() => {
                 let msg = $("#m").val();
+                if (msg == ""){
+                    alert("Please enter some messages!");
+                    return false;
+                }
                 socket.emit("message", {msg, room});
                 $('#m').val("");
-                return false;
+                return true;
             });
             // clear btn;
             $('#clear').click(() => {
-                $('#m').val("");
+                $('#messages').text("");
             });
             // update the messages section
             socket.on("message", (msg) => {
