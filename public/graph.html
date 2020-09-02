@@ -60,7 +60,7 @@
             socket.on("connect", () => {
                 socket.emit("join", {room : room});
             });
-            
+
             // send btn;
             $('#send').click(() => {
                 let msg = $("#m").val();

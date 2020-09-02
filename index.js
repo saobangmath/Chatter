@@ -31,12 +31,14 @@ tech.on("connection", (socket) =>{
         socket.join(data.room);
         tech.in(data.room).emit("message", `New user joined ${data.room} room!`);
    });
-
    socket.on("message", (data) =>{
-       console.log(`message: ${data.msg}`);
-       tech.in(data.room).emit("message", data.msg);
+        console.log(`message: ${data.msg}`);
+        tech.in(data.room).emit("message", data.msg);
    }); 
-   socket.on("disconnect", () => {
-        tech.emit("message", "user disconnected");
+   // socket connection disconnected;
+   socket.on("disconnecting", () => {
+        var rooms = Object.keys(socket.rooms); 
+        console.log(rooms);
+        rooms.forEach(room => socket.to(room).emit("message", "User leave the room!"));
    });
 })
